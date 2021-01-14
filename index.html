@@ -1,7 +1,7 @@
 <!doctype html>
 <html>
   <head>
-	<meta name="viewport" content= "width=device-width, initial-scale=1.0" http-equiv="content-type" content="text/html" charset="UTF-8" />
+	<meta name="viewport" content= "width=device-width" http-equiv="content-type" content="text/html" charset="UTF-8" />
    
    <!--OL6-->
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/openlayers/openlayers.github.io@master/en/v6.4.3/css/ol.css" type="text/css">
@@ -31,7 +31,7 @@
 	<!--OL6-->
     <script type="text/javascript" src="https://cdn.jsdelivr.net/gh/openlayers/openlayers.github.io@master/en/v6.4.3/build/ol.js"></script>
 	
-	<!--TR3-->
+	<!--TR3 ../TR3-min/TR3.debug.js https://terre3.es/API/TR3.js-->
 	<script type="text/javascript" src="https://terre3.es/API/TR3.js"></script>
 	
 	<!--proj4-->
@@ -69,7 +69,7 @@
 		
 		TR3.setLoader( 'TR3-min/' );
 		document.getElementById('tools').innerHTML = TR3.setPanel();
-		TR3.setOptions(false/*imgControl*/, false/*cursor*/, false/*anaglyph*/, true/*autoRotate*/, false/*wireframeMesh*/);
+		TR3.setOpts({imgControl: false, autoRotate: true});
 		
 		$( "#tools" ).dialog({position: { my: "right top", at: "right top", of: window },width: 215});
 		
@@ -89,19 +89,20 @@ function setTR3() {
 	var oriAux = document.getElementsByTagName('CANVAS');
 	var ori = oriAux[0];
 			
-	/*var oriCtx = ori.getContext("2d");
-	//draw a red box
-	oriCtx.fillStyle="#FF0000";
-	oriCtx.fillRect(100,100,300,300);
-	var img = new Image;
-	img.src = ori.toDataURL();*/
-		
-	TR3.setStart(ori, desty, bbox, code);
-	TR3.setLookAt([439698.8734957983,15.666981681648608,-4439763.959669685,438320.22672656854,1133.9386287891211,-4440795.705451496]);
+	var TR3pms = {	ori: ori, 
+					desty: desty, 
+					bbox: bbox, 
+					projCode: code,
+					lookAtini: [50,4]};
+	
+	TR3.setStart( TR3pms );
+	TR3.setLookAt([439698.8734957983,15.666981681648608,-4439763.959669685,438320.22672656854,1133.9386287891211,-4440795.705451496]); //getLookAt()
 
 }
 
-map.on('moveend', setTR3);
+setTimeout(function () {
+	map.on('moveend', setTR3);
+}, 500);
 
 // https://openlayers.org/en/latest/examples/tile-load-events.html
 /**
