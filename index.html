@@ -36,7 +36,6 @@
 	
 	<!--proj4-->
 	<script type="text/javascript" src="proj4js/proj4.js"></script>
-	<script type="text/javascript" src="proj4js/25830.js"></script>
 	
     <title>Lookat example</title>
   </head>
@@ -47,9 +46,6 @@
 	<div id="progress" style="display:none" ></div>
 	<div style="display: inline-flex;">lookat: <div id="lookat" >...</div></div>
     <script type="text/javascript">
-		ol.proj.proj4.register(proj4);//ol v5.0.0
-		var projection = ol.proj.get("EPSG:25830");
-		projection.setExtent([ -1500000, 3000000, 2000000, 5000000]);
 		
 		var osmLayer =  new ol.layer.Tile({
 			source: new ol.source.OSM({crossOrigin: 'anonymous'})
@@ -60,10 +56,8 @@
 				osmLayer
 			],
 			view: new ol.View({
-				center: [439700, 4439700],
-				//maxZomm: 12,
-				zoom: 12,
-				projection: projection
+				center: [-411990, 4933238],
+				zoom: 6.5
 			})
 		});
 		
@@ -75,7 +69,7 @@
 		
 		setInterval(function() { 
 			document.getElementById('lookat').innerHTML = '[' + TR3.getLookAt().toString() + ']';
-		}, 3000);
+		}, 1000);
 		
 		
 
@@ -92,11 +86,10 @@ function setTR3() {
 	var TR3pms = {	ori: ori, 
 					desty: desty, 
 					bbox: bbox, 
-					projCode: code,
-					lookAtini: [50,4]};
+					projCode: code};
 	
 	TR3.setStart( TR3pms );
-	TR3.setLookAt([439698.8734957983,15.666981681648608,-4439763.959669685,438320.22672656854,1133.9386287891211,-4440795.705451496]); //getLookAt()
+	TR3.setLookAt([-412425.2362416772,1957.0945861425143,-4929389.696800511,-409067.3662396392,289984.58106436935,-4276637.635902414]);
 
 }
 
